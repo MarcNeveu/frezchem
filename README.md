@@ -54,7 +54,7 @@ acidity option:
 * `Acidity fixed by H+ ion concentration (Option 3)`, enter `3`. 
 * `Acidity fixed by alkalinity (Option 4)`, enter `4`.
 * `Acidity fixed by NH3(aq) and NH4(aq) (Option 5)`, enter `5`.
-* `Initial pH:` If an acidity opttion was chosen, then for Option `1`, enter `0`; Option `2`, enter pH; Options `3` and `4`, enter an approximate pH; Option `5`, enter `10`. If no acidity option was chosen, specify Initital pH. (e.g., 7.0).
+* `Initial pH:` If an acidity opttion was chosen, then for Option `1`, enter `0`; Option `2`, enter the pH; Options `3` and `4`, enter an approximate pH; Option `5`, enter `10`. If no acidity option was chosen, specify the pH. (e.g., `7.0`).
 
 #### Anions
 * `Chloride (m/kg):` Enter chloride molality (moles/kg(water)). Otherwise, enter `0.0`. Same for `Bromide`, `Perchlorate`, `Sulfate`, and `Nitrate`.
@@ -81,11 +81,11 @@ acidity option:
 * `Mole Fraction of N2:` Enter the mole fraction of N2(g) for the system (mole fraction = PN2/total pressure). For pure N2, enter `1.0`. If `0.0`, then N2(g) is fixed and independent of total pressure.
 
 #### Gas hydrates
-`Mixed CH4-CO2 Gas Hydrate?:` If both CH4(g) and CO2(g) are specified as inputs, then you can use this data to estimate the stability of a mixed CH4-CO2 gas hydrate (YES = `1`) or treat the two gases as independent gas hydrates (NO = `0`). Same for 
+`Mixed CH4-CO2 Gas Hydrate?:` If both CH4(g) and CO2(g) are specified as inputs, then you can use this data to estimate the stability of a mixed CH4-CO2 gas hydrate (`1`) or treat the two gases as independent gas hydrates (`0`). Same for 
 oher combinations of N2, CH4, CO2, C2H6, and C3H8.
 
 #### Other inputs
-* `Molar to Molal Conversion?:` If you want to convert molar data into molal concentrations, then enter `1` for "Yes" or `0` for "No".
+* `Molar to Molal Conversion?:` If you want to convert molar data into molal concentrations, then enter `1` for Yes or `0` for No.
 * `Salinity/liter:` If "Yes" above, then you must enter the total aqueous salinity (g salt/liter), which can be calculated from molar data [g salt/liter = ∑(moles/liter) x (g salt/mole)]. In the case depicted in Table 7 of the [PDF file](https://github.com/MarcNeveu/frezchem/blob/master/Notes_FRIENDS_OF_FREZCHEM17.pdf), the `SL` value is 316.57 g salt/liter (5.417 x 58.44).
 * `Initial Temperature(K):` Enter the temperature Kelvin for start of simulation (e.g., `273.15`).
 * For Temperature Change Pathway(1):
