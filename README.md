@@ -1,7 +1,7 @@
 # frezchem
 _Legacy repository of the `FREZCHEM` code developed by [Giles Marion](https://www.dri.edu/directory/giles-marion) (Desert Research Institute) et al. This and previous versions used to be freely accessible at frezchem.dri.edu but that page is no longer accessible._
 
-_Efforts are underway by Jonathan Toner and David Catling at the University of Washington to revisit the thermodynamic model behind `FREZCHEM` and move it to the versatile `PHREEQC` code. Here is an [example publication](https://www.researchgate.net/profile/Jonathan_Toner/publication/271601980_Modeling_salt_precipitation_from_brines_on_Mars_Evaporation_versus_freezing_origin_for_soil_salts/links/5aa2eb92a6fdccd544b75832/Modeling-salt-precipitation-from-brines-on-Mars-Evaporation-versus-freezing-origin-for-soil-salts.pdf) from their work._
+_Efforts are underway by Jonathan Toner and David Catling at the University of Washington to revisit the thermodynamic model behind `FREZCHEM` and move it to the versatile `PHREEQC` code. Here is an [example publication](https://www.researchgate.net/profile/Jonathan_Toner/publication/271601980_Modeling_salt_precipitation_from_brines_on_Mars_Evaporation_versus_freezing_origin_for_soil_salts/links/5aa2eb92a6fdccd544b75832/Modeling-salt-precipitation-from-brines-on-Mars-Evaporation-versus-freezing-origin-for-soil-salts.pdf) from their work. A FREZCHEM-like PHREEQC implementation is provided as the three `PHREEQC_*` files above (freezing routine, thermodynamic database, output processing pipeline)._
 
 _Below are some of the release notes for `FREZCHEM` version 17. See [full v17 release notes](https://github.com/MarcNeveu/frezchem/blob/master/Notes_FRIENDS_OF_FREZCHEM17.pdf)._
 
