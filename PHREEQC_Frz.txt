@@ -1,0 +1,138 @@
+# Marc Neveu - Aug. 2020 - Freezing routine written as PHREEQC input file and emulating the capabilities of FREZCHEM
+
+DATABASE ./je7b00265_si_001_vm.txt
+
+TITLE Set up temperature loop for freezing simulation
+
+SOLUTION 1 Ocean water
+
+	pH		7.0	charge
+	temp		-0.1
+	pressure	1	#atm
+#	pe		4.5
+	water		1	kg
+	units		mmol/kgw
+	Ca		1
+	Mg		1
+	Na		1
+	K		1
+	Cl		4
+	S		1
+
+EQUILIBRIUM_PHASES 1 Minerals allowed to precipitate
+# precipitate_only for fractional Xtal?
+# Commented out species with no solubility data temperature below 273 K
+
+	# Phase name	# Target SI	# mol	# precipitate_only	# Formula
+	Ice(s)		0		0				# H2O
+
+# Chlorides
+	Halite		0		0				# NaCl
+	Hydrohalite	0		0				# NaCl:2H2O
+	Sylvite		0		0				# KCl
+	Antarcticite	0		0				# CaCl2:6H2O
+	Bischofite	0		0				# MgCl2:6H2O
+	MgCl2:8H2O	0		0				# MgCl2:8H2O
+	MgCl2:12H2O	0		0				# MgCl2:12H2O
+	Carnallite	0		0				# KMgCl3:6H2O
+#	Tachyhydrite	0		0				# CaCl2:(MgCl2)2:12H2O
+
+# Sulfates
+	Anhydrite	0		0				# CaSO4	
+	Arcanite	0		0				# K2SO4
+	Epsomite	0		0				# MgSO4:7H2O
+	Gypsum		0		0				# CaSO4:2H2O	
+	Meridianiite	0		0				# MgSO4:11H2O
+	Mirabilite	0		0				# Na2SO4:10H2O
+	Picromerite	0		0				# MgSO4:K2SO4:6H2O
+#	Bloedite	0		0				# Na2Mg(SO4)2:4H2O
+#	Hexahydrite	0		0				# MgSO4:6H2O
+#	Kieserite	0		0				# MgSO4:H2O
+#	Thenardite	0		0				# Na2SO4
+#	Na2SO4:7H2O	0		0				# Na2SO4:7H2O
+#	Starkeyite	0		0				# MgSO4:4H2O
+#	Pentahydrite	0		0				# MgSO4:5H2O
+#	Hexahydrite	0		0				# MgSO4:6H2O
+#	Bassanite	0		0				# CaSO4:0.5H2O
+	Glaserite	0		0				# Na2SO4:3K2SO4
+#	Glauberite	0		0				# Na2SO4:CaSO4
+#	Labile_Salt	0		0				# Na4(SO4)2:CaSO4:2H2O
+#	Leonite		0		0				# K2SO4:MgSO4:4H2O
+#	Langbeinite	0		0				# K2SO4:2MgSO4
+#	Syngenite	0		0				# K2SO4:CaSO4:H2O
+#	Polyhalite	0		0				# K2SO4:MgSO4:Ca2(SO4)2:2H2O
+
+# Mixed chloride-sulfate
+#	Kainite		0		0				# KCl:MgSO4:2.75H2O
+
+SAVE solution 1
+SAVE equilibrium_phases 1 # Only if equilibrium Xtal. Comment out for fractional Xtal.
+
+SELECTED_OUTPUT
+    -file                 ./frzloopsetup.txt
+    -reset                true
+
+USER_PUNCH
+    -headings
+    -start
+ 10 FOR i= -0.1 TO -20.0 STEP -0.1
+ 20 a$ = EOL$ + "SOLUTION_MODIFY 1" + EOL$
+
+# For temperature stepping (freezing simulation, comment either this line or the next):
+ 21 a$ = a$ + "temp " + STR$(i) + EOL$
+
+# For water stepping (evaporation simulation, comment either this line or the previous):
+# 22 a$ = a$ + "water " + STR$(i) + EOL$
+
+ 25 a$ = a$ + "USE solution 1" + EOL$
+ 30 a$ = a$ + "USE equilibrium_phases 1" + EOL$
+ 40 a$ = a$ + "SAVE solution 1" + EOL$
+
+ # Only if equilibrium Xtal. Comment out for fractional Xtal.
+ 50 a$ = a$ + "SAVE equilibrium_phases 1" + EOL$ 
+
+ # Write selected outputs as individual files that then have to be concatenated in terminal using:
+ # "find . -type f -name "*.txt" | while read file; do     sed -n '2{p;q;}' $file >> z.out; done"
+ # Adjust command depending on i's min max step so that the titles are unique and have no space, +, -, or . characters.
+ 60 a$ = a$ + "SELECTED_OUTPUT" + EOL$
+ 61 a$ = a$ + "-file ./Out/" + MID$(STR$(i),3,1) + MID$(STR$(i),5,2) + MID$(STR$(i),9,1) + MID$(STR$(i),12,1) + ".txt" + EOL$  
+
+ # Important so as to get pH right if need to restart at the end of a crashed simulation
+ 62 a$ = a$ + "-high_precision true" + EOL$ 
+
+ 63 a$ = a$ + "-reset false" + EOL$
+ 64 a$ = a$ + "-simulation true" + EOL$
+ 65 a$ = a$ + "-state false" + EOL$
+ 66 a$ = a$ + "-temperature true" + EOL$
+ 67 a$ = a$ + "-pH true" + EOL$
+ 68 a$ = a$ + "-pe true" + EOL$
+ 69 a$ = a$ + "-ionic_strength true" + EOL$
+ 70 a$ = a$ + "-water true" + EOL$
+ 71 a$ = a$ + "-charge_balance true" + EOL$
+ 72 a$ = a$ + "-percent_error true" + EOL$
+ 73 a$ = a$ + "-totals Ca Mg Na K Cl S" + EOL$
+ 75 a$ = a$ + "-equilibrium_phases Ice(s) Halite Hydrohalite Sylvite Antarcticite Bischofite MgCl2:8H2O MgCl2:12H2O Carnallite Anhydrite Arcanite Epsomite Gypsum Meridianiite Mirabilite Picromerite Glaserite" + EOL$
+
+ # Add solution density to selected output (not a default option)
+ 80 a$ = a$ + "USER_PUNCH" + EOL$
+ 81 a$ = a$ + "-headings Solution_density Pressure Specific_conductance" + EOL$
+ 82 a$ = a$ + "-start" + EOL$
+ 83 a$ = a$ + "PUNCH RHO" + EOL$      # kg/L
+ 84 a$ = a$ + "PUNCH PRESSURE" + EOL$ # atm
+ 85 a$ = a$ + "PUNCH SC" + EOL$       # uS/cm, need to have -dw values in database for nonzero output
+ 89 a$ = a$ + "-end" + EOL$
+
+140 a$ = a$ + "END" + EOL$
+150 PUNCH a$
+160 NEXT i
+    -end
+END
+
+TITLE Loop freezing simulation
+
+INCLUDE$ ./frzloopsetup.txt
+
+END
+
+
+	
