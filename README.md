@@ -9,16 +9,21 @@ _Below are a description of the PHREEQC freezing routine as well as some of the 
 
 _PHREEQC_ freezing routine (`PHREEQC_Frz.txt`) emulating the capabilities of _FREZCHEM_, with a more restricted (Na-Mg-K-Ca-SO4-Cl) but thermodynamically consistent chemical space (see [Toner & Catling 2017](https://doi.org/10.1021/acs.jced.7b00265)). This is a _PHREEQC_ input file to be used in combination with the Toner & Catling database augmented with molar volumes (`PHREEQC_TC17_vm.txt`). See comments within `PHREEQC_Frz.txt` about how to switch between equilibrium and fractional crystallization, and between freezing (`temp` stepping at _BASIC_ l. 21) and evaporation (`water` stepping).
 
-Outputs are saved in an `./Out` folder and require `bash` concatenating prior to plotting using `PHREEQC_Pipelne.xslx`. In a terminal window on Mac or Linux, this can be done automatically by typing:
+Outputs are saved in a `./Out` folder and require `bash` concatenating prior to plotting using `PHREEQC_Pipeline.xslx`. In a terminal window on Mac or Linux, this can be done automatically from within the `Out` folder by typing:
 ```
 find . -type f -name "*.txt" |
 while read file; do
     sed -n '2{p;q;}' $file >> z.out
 done
 ```
+or in a single command line:
+```
+find . -type f -name "*.txt" | while read file; do     sed -n '2{p;q;}' $file >> z.out; done
+```
+
 The contents of the generated z.out file can be pasted directly in the first tab ("Raw") of `PHREEQC_Pipelne.xslx`. Sort this tab by descending temperature (column D, high to low) for the plots in the third "Processed" tab to look good.
 
-This routine has been benchmarked against Toner & Catling (2017) Tables 1 and 2, as well as against calculations from [Marion et al. 2005](https://doi.org/10.1016/j.gca.2004.06.024) (Fig. 4 & 5).
+This routine has been benchmarked against [Toner & Catling 2017](https://doi.org/10.1021/acs.jced.7b00265) Tables 1 and 2, as well as against [Marion et al. 2005](https://doi.org/10.1016/j.gca.2004.06.024) Fig. 4 & 5.
 
 ## FREZCHEM release notes (v17)
 Attached is a "beta" version of the `FREZCHEM` model that includes:
