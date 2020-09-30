@@ -3,9 +3,24 @@ _Legacy repository of the `FREZCHEM` code developed by [Giles Marion](https://ww
 
 _Efforts are underway by Jonathan Toner and David Catling at the University of Washington to revisit the thermodynamic model behind `FREZCHEM` and move it to the versatile `PHREEQC` code. Here is an [example publication](https://www.researchgate.net/profile/Jonathan_Toner/publication/271601980_Modeling_salt_precipitation_from_brines_on_Mars_Evaporation_versus_freezing_origin_for_soil_salts/links/5aa2eb92a6fdccd544b75832/Modeling-salt-precipitation-from-brines-on-Mars-Evaporation-versus-freezing-origin-for-soil-salts.pdf) from their work. A FREZCHEM-like PHREEQC implementation is provided as the three `PHREEQC_*` files above (freezing routine, thermodynamic database, output processing pipeline)._
 
-_Below are some of the release notes for `FREZCHEM` version 17. See [full v17 release notes](https://github.com/MarcNeveu/frezchem/blob/master/Notes_FRIENDS_OF_FREZCHEM17.pdf)._
+_Below are a description of the PHREEQC freezing routine as well as some of the release notes for `FREZCHEM` version 17. See [full v17 release notes](https://github.com/MarcNeveu/frezchem/blob/master/Notes_FRIENDS_OF_FREZCHEM17.pdf)._
 
-## Release notes (v17)
+## PHREEQC freezing routine
+
+_PHREEQC_ freezing routine (`PHREEQC_Frz.txt`) emulating the capabilities of _FREZCHEM_, with a more restricted (Na-Mg-K-Ca-SO4-Cl) but thermodynamically consistent chemical space (see [Toner & Catling 2017](https://doi.org/10.1021/acs.jced.7b00265)). This is a _PHREEQC_ input file to be used in combination with the Toner & Catling database augmented with molar volumes (`PHREEQC_TC17_vm.txt`). See comments within `PHREEQC_Frz.txt` about how to switch between equilibrium and fractional crystallization, and between freezing (`temp` stepping at _BASIC_ l. 21) and evaporation (`water` stepping).
+
+Outputs are saved in an `./Out` folder and require `bash` concatenating prior to plotting using `PHREEQC_Pipelne.xslx`. In a terminal window on Mac or Linux, this can be done automatically by typing:
+```
+find . -type f -name "*.txt" |
+while read file; do
+    sed -n '2{p;q;}' $file >> z.out
+done
+```
+The contents of the generated z.out file can be pasted directly in the first tab ("Raw") of `PHREEQC_Pipelne.xslx`. Sort this tab by descending temperature (column D, high to low) for the plots in the third "Processed" tab to look good.
+
+This routine has been benchmarked against Toner & Catling (2017) Tables 1 and 2, as well as against calculations from [Marion et al. 2005](https://doi.org/10.1016/j.gca.2004.06.024) (Fig. 4 & 5).
+
+## FREZCHEM release notes (v17)
 Attached is a "beta" version of the `FREZCHEM` model that includes:
 * chloride, bromide, perchlorate, nitrate, sulfate, and bicarbonate-carbonate salts, 
 * strong acid chemistry, 
