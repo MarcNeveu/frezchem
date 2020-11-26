@@ -1,7 +1,10 @@
-# Marc Neveu - Aug. 26, 2020 - Modified to include molar volumes
+# Marc Neveu - 2020 - Modified to include molar volumes
 # References: 
 # APP14: http://dx.doi.org/10.1016/j.gca.2013.10.003 (solute molar volumes, see phreeqc.dat)
 # Marion+05: https://doi.org/10.1016/j.gca.2004.06.024 (salt molar volumes)
+
+# Tip from J. Toner: the dummy element Bah keeps a bit of solution unfrozen and allows the program to proceed 
+# even when a lot of water starts to freeze near the eutectic.
 
 # A low-temperature aqueous thermodynamic model for the Na-K-Ca-Mg-Cl-SO4 system incorporating new experimental heat capacities in Na2SO4, K2SO4, and MgSO4 solutions
 # Jonathan D. Toner* and David C. Catling
@@ -18,6 +21,7 @@
 
 
 SOLUTION_MASTER_SPECIES								
+Bah	Bah	0	Bah	0.1
 H	H+	-1	H	1.008				
 H(1)	H+	-1	0					
 E	e-	0	0	0				
@@ -32,6 +36,8 @@ S	SO4-2	0	SO4	32.064
 S(6)	SO4-2	0	SO4					
 								
 SOLUTION_SPECIES								
+Bah = Bah
+	log_k	0
 H+ = H+								
 	log_k	0						
 e- = e-								
