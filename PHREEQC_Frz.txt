@@ -141,16 +141,17 @@ USER_PUNCH
  70 a$ = a$ + "-water true" + EOL$
  71 a$ = a$ + "-charge_balance true" + EOL$
  72 a$ = a$ + "-percent_error true" + EOL$
- 73 a$ = a$ + "-totals Ca Mg Na K Cl S" + EOL$
+ 73 a$ = a$ + "-totals Ca Mg Na K Cl S Bah" + EOL$
  75 a$ = a$ + "-equilibrium_phases Ice(s) Halite Hydrohalite Sylvite Antarcticite Bischofite MgCl2:8H2O MgCl2:12H2O Carnallite Anhydrite Arcanite Epsomite Gypsum Meridianiite Mirabilite Picromerite Glaserite" + EOL$
 
- # Add solution density to selected output (not a default option)
+ # Add solution density, volume, pressure, and specific conductance to selected output (not default options)
  80 a$ = a$ + "USER_PUNCH" + EOL$
  81 a$ = a$ + "-headings Solution_density Pressure Specific_conductance" + EOL$
  82 a$ = a$ + "-start" + EOL$
  83 a$ = a$ + "PUNCH RHO" + EOL$      # kg/L
- 84 a$ = a$ + "PUNCH PRESSURE" + EOL$ # atm
- 85 a$ = a$ + "PUNCH SC" + EOL$       # uS/cm, need to have -dw values in database for nonzero output
+ 84 a$ = a$ + "PUNCH SOLN_VOL" + EOL$ # L
+ 85 a$ = a$ + "PUNCH PRESSURE" + EOL$ # atm
+ 86 a$ = a$ + "PUNCH SC" + EOL$       # uS/cm, need to have -dw values in database for nonzero output
  89 a$ = a$ + "-end" + EOL$
 
 140 a$ = a$ + "END" + EOL$
@@ -164,6 +165,3 @@ TITLE Loop freezing simulation
 INCLUDE$ ./frzloopsetup.txt
 
 END
-
-
-	
