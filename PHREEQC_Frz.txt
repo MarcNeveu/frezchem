@@ -34,7 +34,7 @@ SOLUTION 1 Ocean water
 
 	pH		7.0	charge
 	temp		0
-	pressure	240	# atm, 243 bars
+	pressure	1	# atm, *1.01325 for bars
 #	pe		4.5
 	water		1	kg
 	units		mol/kgw
@@ -45,6 +45,7 @@ SOLUTION 1 Ocean water
 	Cl		0.308
 	S		3.5964
 	Bah		1.0e-5	# Abundance must be negligible so as not to affect the chemistry
+
 
 EQUILIBRIUM_PHASES 1 Minerals allowed to precipitate
 # precipitate_only for fractional Xtal?
@@ -93,7 +94,7 @@ EQUILIBRIUM_PHASES 1 Minerals allowed to precipitate
 #	Kainite		0		0				# KCl:MgSO4:2.75H2O
 
 SAVE solution 1
-SAVE equilibrium_phases 1 # Only if equilibrium Xtal. Comment out for fractional Xtal.
+# SAVE equilibrium_phases 1 # Only if equilibrium Xtal. Comment out for fractional Xtal.
 
 SELECTED_OUTPUT
     -file                 ./frzloopsetup.txt
@@ -102,7 +103,17 @@ SELECTED_OUTPUT
 USER_PUNCH
     -headings
     -start
- 10 FOR i= -0.1 TO -40 STEP -0.1
+ 10 FOR i= 25.4 TO -60 STEP -0.5
+
+# Lines 11-15: attempted to redefine water to account for density (i.e., Vm) change with temperature 
+# from Pruppacher and Klett (1997) but this seems to be ignored by PHREEQC.
+# 11 a$ = EOL$ + "PHASES" + EOL$
+# 12 a$ = a$ + "Ice(s)" + EOL$
+# 13 a$ = a$ + "H2O = H2O" + EOL$
+# 14 a$ = a$ + "-analytic -1.10976341E+01 5.11995404E-03 3.48880086E+02 3.65409383E+00 -7.51772938E+03 -5.09587694E-06" + EOL$
+# 15 a$ = a$ + "-Vm " + STR$((1.008*2+15.999)/(916.7-0.175*i-0.0005*i*i)*1000) + EOL$ 
+
+# 20 a$ = a$ + "SOLUTION_MODIFY 1" + EOL$
  20 a$ = EOL$ + "SOLUTION_MODIFY 1" + EOL$
 
 # Temperature stepping (freezing simulation):
@@ -112,14 +123,14 @@ USER_PUNCH
 # 22 a$ = a$ + "water " + STR$(i) + EOL$
 
 # Pressure stepping (e.g. along geotherm):
-# 23 a$ = a$ + "pressure " + STR$((i+273-100)/(260-100)*240) + EOL$
+# 23 a$ = a$ + "pressure " + STR$((i+273.15-100)/(260-100)*240) + EOL$
 
  25 a$ = a$ + "USE solution 1" + EOL$
  30 a$ = a$ + "USE equilibrium_phases 1" + EOL$
  40 a$ = a$ + "SAVE solution 1" + EOL$
 
  # Only if equilibrium Xtal. Comment out for fractional Xtal.
-50 a$ = a$ + "SAVE equilibrium_phases 1" + EOL$ 
+# 50 a$ = a$ + "SAVE equilibrium_phases 1" + EOL$ 
 
  # Write selected outputs as individual files that then have to be concatenated in terminal using:
  # "find . -type f -name "*.txt" | while read file; do     sed -n '2{p;q;}' $file >> z.out; done"
@@ -142,6 +153,7 @@ USER_PUNCH
  71 a$ = a$ + "-charge_balance true" + EOL$
  72 a$ = a$ + "-percent_error true" + EOL$
  73 a$ = a$ + "-totals Ca Mg Na K Cl S Bah" + EOL$
+ 74 a$ = a$ + "-activities H2O" + EOL$
  75 a$ = a$ + "-equilibrium_phases Ice(s) Halite Hydrohalite Sylvite Antarcticite Bischofite MgCl2:8H2O MgCl2:12H2O Carnallite Anhydrite Arcanite Epsomite Gypsum Meridianiite Mirabilite Picromerite Glaserite" + EOL$
 
  # Add solution density, volume, pressure, and specific conductance to selected output (not default options)
