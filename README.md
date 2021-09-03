@@ -21,7 +21,7 @@ or in a single command line:
 find . -type f -name "*.txt" | while read file; do     sed -n '2{p;q;}' $file >> z.out; done
 ```
 
-The contents of the generated z.out file can be pasted directly in the first tab ("Raw") of `PHREEQC_Pipelne.xslx`. Sort this tab by descending temperature (column D, high to low) for the plots in the third "Processed" tab to look good.
+The contents of the generated z.out file can be pasted directly in the first tab ("Raw") of `PHREEQC_Pipeline_v3.xslx`. Sort this tab by descending temperature (column D, high to low) for the plots in the third "Processed" tab to look good.
 
 This routine has been benchmarked against [Toner & Catling (2017)](https://doi.org/10.1021/acs.jced.7b00265) Tables 1 and 2, as well as against [Marion et al. (2005)](https://doi.org/10.1016/j.gca.2004.06.024) Fig. 4 & 5.
 
