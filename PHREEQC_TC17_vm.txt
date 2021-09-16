@@ -1,4 +1,5 @@
 # Marc Neveu - 2020 - Modified to include molar volumes
+#            - 2021 - Added diffusion coefficients for calculation of specific conductance
 # References: 
 # APP14: http://dx.doi.org/10.1016/j.gca.2013.10.003 (solute molar volumes, see phreeqc.dat)
 # Marion+05: https://doi.org/10.1016/j.gca.2004.06.024 (salt molar volumes)
@@ -39,31 +40,39 @@ SOLUTION_SPECIES
 Bah = Bah
 	log_k	0
 H+ = H+								
-	log_k	0						
+	log_k	0
+	-dw	 9.31e-9 # all diffusion coefficients dw are from frezchem.dat						
 e- = e-								
 	log_k	0						
 H2O = H2O								
 	log_k	0						
 Ca+2 = Ca+2								
 	log_k	0
+	-dw	 0.793e-9
 	-Vm -0.3456 -7.252 6.149 -2.479 1.239 5 1.60 -57.1 -6.12e-3 1 # APP14				
 Mg+2 = Mg+2								
 	log_k	0
+	-dw	 0.705e-9
 	-Vm -1.410 -8.6 11.13 -2.39 1.332 5.5 1.29 -32.9 -5.86e-3 1 # APP14					
 Na+ = Na+								
 	log_k	0
+	-dw	 1.33e-9
 	-Vm 2.28 -4.38 -4.1 -0.586 0.09 4 0.3 52 -3.33e-3 0.566 # APP14					
 K+ = K+								
 	log_k	0
+	-dw	 1.96e-9
 	-Vm 3.322 -1.473 6.534 -2.712 9.06e-2 3.5 0 29.7 0 1 # APP14						
 Cl- = Cl-								
 	log_k	0
+	-dw	 2.03e-9
 	-Vm 4.465 4.801 4.325 -2.847 1.748 0 -0.331 20.16 0 1 # APP14					
 SO4-2 = SO4-2								
 	log_k	0
+	-dw	 1.07e-9
 	-Vm -7.77 43.17 141.1 -42.45 3.794 0 4.97 26.5 -5.77e-2 0.45 # APP14					
 H2O = OH- + H+								
 	log_k	-14	#This is an arbitrary value that does not affect equilibrium calculations, but it is needed for the pH to converge
+	-dw	 5.27e-9
 	-Vm -9.66 28.5 80.0 -22.9 1.89 0 1.09 0 0 1 # APP14					
 								
 PHASES								
