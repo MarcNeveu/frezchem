@@ -158,7 +158,7 @@ USER_PUNCH
 
  # Add solution density, volume, pressure, and specific conductance to selected output (not default options)
  80 a$ = a$ + "USER_PUNCH" + EOL$
- 81 a$ = a$ + "-headings Solution_density Pressure Specific_conductance" + EOL$
+ 81 a$ = a$ + "-headings Solution_density Solution_volume Pressure Specific_conductance" + EOL$
  82 a$ = a$ + "-start" + EOL$
  83 a$ = a$ + "PUNCH RHO" + EOL$      # kg/L
  84 a$ = a$ + "PUNCH SOLN_VOL" + EOL$ # L
